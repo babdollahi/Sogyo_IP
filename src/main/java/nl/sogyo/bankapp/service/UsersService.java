@@ -2,7 +2,6 @@ package nl.sogyo.bankapp.service;
 
 import nl.sogyo.bankapp.model.UsersModel;
 import nl.sogyo.bankapp.repository.UsersRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +13,7 @@ public class UsersService {
         this.usersRepository = usersRepository;
     }
 
-    public UserModel registerUser(String login, String password, String email) {
+    public UsersModel registerUser(String login, String password, String email) {
         if (login == null && password == null) {
             return null;
         } else {
@@ -26,6 +25,7 @@ public class UsersService {
             return usersRepository.save(usersModel);
         }
     }
+
 
     public UsersModel authentication(String login, String password){
         return usersRepository.findByLoginAndPassword(login, password).orElse(null);
