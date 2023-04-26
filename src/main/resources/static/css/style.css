@@ -2,8 +2,9 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: url(https://picsum.photos/3000/2000/?image=1015);
-  background-size: cover;
+  background: url(https://cdnb.artstation.com/p/assets/images/images/059/603/875/large/banafsheh-shalchian-owl-2.jpg?1676744727);
+  background-size: 800px 800px;
+  background-position: 500px 80px;
   background-repeat: no-repeat;
 }
 
@@ -14,7 +15,7 @@ body::before {
   left: 0;
   width: 25%;
   height: 100%;
-  background-color: #03a9f4;
+  background-color: #e3a9f5;
   opacity: 0.8;
 }
 
@@ -57,7 +58,7 @@ body::before {
 
 .form .input-box input:focus,
 .form .input-box input:valid {
-  border-bottom-color: #03a9f4;
+  border-bottom-color: #e3a9f5;
 }
 
 .form .input-box .fa {
@@ -71,7 +72,7 @@ body::before {
 .form .input-box input[type="submit"] {
   border: none;
   cursor: pointer;
-  background-color: #03a9f4;
+  background-color: #e3a9f5;
   color: #fff;
   font-weight: bold;
   transition: 0.5s;
