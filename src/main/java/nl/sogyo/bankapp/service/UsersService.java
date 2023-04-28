@@ -1,8 +1,14 @@
 package nl.sogyo.bankapp.service;
 
 import nl.sogyo.bankapp.model.UsersModel;
+import nl.sogyo.bankapp.model.BalanceModel;
+
 import nl.sogyo.bankapp.repository.UsersRepository;
+import nl.sogyo.bankapp.repository.AccountRepository;
+
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UsersService {
@@ -17,10 +23,6 @@ public class UsersService {
         if (login == null && password == null) {
             return null;
         } else {
-            if (UsersRepository.findByLogin(login).isPresent()){
-                System.out.println("The user already exists!");
-                return null;
-            }
             UsersModel usersModel = new UsersModel();
             usersModel.setLogin(login);
             usersModel.setPassword(password);
@@ -34,4 +36,17 @@ public class UsersService {
     public UsersModel authentication(String login, String password){
         return usersRepository.findByLoginAndPassword(login, password).orElse(null);
     }
+
+
+    private AccountRepository accountRepository;
+
+    public UsersService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    public BalanceModel getUserBalance(int accountNumber) {
+        Optional<BalanceModel> balanceModel = accountRepository.findByUserAccountNumber(accountNumber);
+        return balanceModel.getBalance();
+    }
+
 }
