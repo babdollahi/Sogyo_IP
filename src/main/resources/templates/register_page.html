@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Register page</title>
@@ -7,8 +7,8 @@
 </head>
 <body>
 <div class="form">
-<form>
-    <h2>Login</h2>
+<form method="post" action="/register" th:object="${registerRequest}">
+    <h2>Registration</h2>
     <div class="input-box">
         <i class="fa fa-user" aria-hidden="true"></i>
         <input type="text" name="Login" placeholder="Login" required>
@@ -24,7 +24,7 @@
     <div class="input-box">
         <input type="submit" name="sign-in" value="Register">
     </div>
-    <a href="/">Navigate to main page</a>
+    <a href="/">Navigate to main page.</a>
 </form>
 </div>
 </body>

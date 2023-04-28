@@ -17,6 +17,10 @@ public class UsersService {
         if (login == null && password == null) {
             return null;
         } else {
+            if (UsersRepository.findByLogin(login).isPresent()){
+                System.out.println("The user already exists!");
+                return null;
+            }
             UsersModel usersModel = new UsersModel();
             usersModel.setLogin(login);
             usersModel.setPassword(password);
