@@ -1,6 +1,7 @@
 package nl.sogyo.bankapp.controller;
 
 import nl.sogyo.bankapp.model.BalanceModel;
+import nl.sogyo.bankapp.model.DepositModel;
 import nl.sogyo.bankapp.service.UsersService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,24 @@ public class UsersController {
     public String processLoginForm(@RequestParam int accountNumber, @RequestParam int pinNumber, Model model) {
         Optional<BalanceModel> balanceModelOptional = usersService.checkLogin(accountNumber, pinNumber);
         if (balanceModelOptional.isPresent() && balanceModelOptional.get() != null) {
+//            model.addAttribute("depositRequest", new DepositModel());
             BalanceModel balanceModel = balanceModelOptional.get();
-            balanceModel.getAccountNumber();
-            balanceModel.getBalance();
+            model.addAttribute("userAccount", balanceModel.getAccountNumber());
+            model.addAttribute("userBalance", balanceModel.getBalance());
             return "personal_page";
         } else {
             return "error_page";
         }
+    }
+
+    @PostMapping("/deposit")
+    public String processDepositForm(DepositModel depositModel, Model model) {
+        double depositAmount = depositModel.getAmount();
+        int accountNumber = depositModel.getAccountNumber();
+        Optional<DepositModel> newBalance = usersService.addDeposit(accountNumber, depositAmount);
+
+        model.addAttribute("newBalance", newBalance);
+        return "deposit_success";
     }
 }
 

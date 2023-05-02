@@ -1,6 +1,8 @@
 package nl.sogyo.bankapp.model;
 
 import jakarta.persistence.Entity;
+
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Table;
@@ -63,4 +65,5 @@ public class BalanceModel {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
 }

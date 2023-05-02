@@ -94,3 +94,15 @@ body::before {
 .form a:hover {
   color: #ff4987;
 }
+
+.account-number, .saving-balance {
+  font-family: Arial, sans-serif;
+   ont-size: 24px;
+}
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 24px;
+}

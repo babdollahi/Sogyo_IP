@@ -6,12 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-
 @Repository
 public interface AccountRepository extends JpaRepository<BalanceModel, Integer> {
-//    Optional<BalanceModel> findByAccountnumberAndPinnumber(int accountNumber, int pinNumber);
-
-
     Optional<BalanceModel> findByAccountNumberAndPinNumber(int accountNumber, int pinNumber);
+    Optional<BalanceModel> findByAccountNumber(int accountNumber);
 }
-
