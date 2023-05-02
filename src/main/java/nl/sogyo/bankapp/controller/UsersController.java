@@ -26,10 +26,14 @@ public class UsersController {
         model.addAttribute("loginRequest", new BalanceModel());
         return "login_page";
     }
+
     @PostMapping("/login")
     public String processLoginForm(@RequestParam int accountNumber, @RequestParam int pinNumber, Model model) {
-        Optional<BalanceModel> balanceModel = usersService.checkLogin(accountNumber, pinNumber);
-        if (balanceModel != null) {
+        Optional<BalanceModel> balanceModelOptional = usersService.checkLogin(accountNumber, pinNumber);
+        if (balanceModelOptional.isPresent() && balanceModelOptional.get() != null) {
+            BalanceModel balanceModel = balanceModelOptional.get();
+            balanceModel.getAccountNumber();
+            balanceModel.getBalance();
             return "personal_page";
         } else {
             return "error_page";

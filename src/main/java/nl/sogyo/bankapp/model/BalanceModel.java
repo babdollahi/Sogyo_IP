@@ -6,7 +6,6 @@ import java.util.Objects;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
-
 @Entity
 @Table(name="login")
 public class BalanceModel {
@@ -53,7 +52,7 @@ public class BalanceModel {
         return pinNumber;
     }
 
-    public void settPinNumber(int pinNumber) {
+    public void setPinNumber(int pinNumber) {
         this.pinNumber = pinNumber;
     }
 
@@ -64,27 +63,4 @@ public class BalanceModel {
     public void setBalance(double balance) {
         this.balance = balance;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BalanceModel that = (BalanceModel) o;
-        return Objects.equals(id, that.id) && Objects.equals(accountNumber, that.accountNumber) && Objects.equals(pinNumber, that.pinNumber) && Objects.equals(balance, that.balance);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, accountNumber, pinNumber, balance);
-    }
-
-    @Override
-    public String toString() {
-        return "UsersModel{" +
-                "id=" + id +
-                ", login='" + accountNumber + '\'' +
-                ", email='" + balance + '\'' +
-                '}';
-    }
-
 }

@@ -16,8 +16,8 @@ public class UsersService {
         this.accountRepository = accountRepository;
     }
 
-    public Optional<BalanceModel> checkLogin(int accountNumber, int pinNumber){
-        return  accountRepository.findByAccountNumberAndPinNumber(accountNumber,pinNumber);
+    public Optional<BalanceModel>checkLogin(int accountNumber, int pinNumber){
+        return accountRepository.findByAccountNumberAndPinNumber(accountNumber, pinNumber);
     }
 
 }
