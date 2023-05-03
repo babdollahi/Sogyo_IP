@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Deposit Success</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h1>Deposit Successful!</h1>
-<p>Your new balance is: <span th:text="${newBalance}"></span></p>
+<div style="text-align: center;">
+    <h1>Deposit Successful!</h1>
+    <p>Your new balance is: <span th:text="${newBalance}"></span></p>
+    <br>
+    <a href="/login">Navigate to login page.</a>
+</div>
 </body>
 </html>

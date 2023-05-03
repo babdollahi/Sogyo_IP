@@ -3,6 +3,7 @@ package nl.sogyo.bankapp.service;
 import nl.sogyo.bankapp.model.BalanceModel;
 import nl.sogyo.bankapp.model.DepositModel;
 import nl.sogyo.bankapp.repository.AccountRepository;
+import nl.sogyo.bankapp.repository.DepositRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public class UsersService {
 
     private AccountRepository accountRepository;
+    private DepositRepository depositRepository;
 
     public UsersService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
@@ -34,6 +36,7 @@ public class UsersService {
             depositModel.setAmount(amount);
             depositModel.setDateOfProcess(now);
             accountRepository.save(balanceModel);
+//            depositRepository.save(depositModel);
             return balanceModel.getBalance();
         }
         return 0;

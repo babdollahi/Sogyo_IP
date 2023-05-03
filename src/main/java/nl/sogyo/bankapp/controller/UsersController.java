@@ -49,9 +49,6 @@ public class UsersController {
         model.addAttribute("amount", depositModel.getAmount());
         model.addAttribute("newBalance", newBalance);
         return "deposit_success";
-
-
-
     }
 
 }
