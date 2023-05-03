@@ -15,9 +15,12 @@ public class UsersService {
     private AccountRepository accountRepository;
     private DepositRepository depositRepository;
 
-    public UsersService(AccountRepository accountRepository) {
+    public UsersService(AccountRepository accountRepository, DepositRepository depositRepository) {
         this.accountRepository = accountRepository;
+        this.depositRepository = depositRepository;
+
     }
+
 
     public Optional<BalanceModel> checkLogin(int accountNumber, int pinNumber) {
         return accountRepository.findByAccountNumberAndPinNumber(accountNumber, pinNumber);
@@ -36,7 +39,7 @@ public class UsersService {
             depositModel.setAmount(amount);
             depositModel.setDateOfProcess(now);
             accountRepository.save(balanceModel);
-//            depositRepository.save(depositModel);
+            depositRepository.save(depositModel);
             return balanceModel.getBalance();
         }
         return 0;
