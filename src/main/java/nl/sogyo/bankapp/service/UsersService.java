@@ -17,13 +17,13 @@ public class UsersService {
         this.accountRepository = accountRepository;
     }
 
-    public Optional<BalanceModel> checkLogin(int accountNumber, int pinNumber){
+    public Optional<BalanceModel> checkLogin(int accountNumber, int pinNumber) {
         return accountRepository.findByAccountNumberAndPinNumber(accountNumber, pinNumber);
     }
 
-    public Optional<Object> addDeposit(int accountNumber, double amount) {
+    public double addDeposit(int accountNumber, double amount) {
         Optional<BalanceModel> balanceModelOptional = accountRepository.findByAccountNumber(accountNumber);
-        if(balanceModelOptional.isPresent()){
+        if (balanceModelOptional.isPresent()) {
             BalanceModel balanceModel = balanceModelOptional.get();
             double currentBalance = balanceModel.getBalance();
             double updatedBalance = currentBalance + amount;
@@ -34,8 +34,8 @@ public class UsersService {
             depositModel.setAmount(amount);
             depositModel.setDateOfProcess(now);
             accountRepository.save(balanceModel);
-            return Optional.of(balanceModel.getBalance());
+            return balanceModel.getBalance();
         }
-        return Optional.empty();
+        return 0;
     }
 }

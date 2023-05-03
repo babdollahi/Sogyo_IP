@@ -44,7 +44,7 @@ public class UsersController {
     }
     @PostMapping("/deposit")
     public String processDepositForm(DepositModel depositModel, BalanceModel balanceModel, Model model) {
-        Optional<Object> newBalance = usersService.addDeposit(balanceModel.getAccountNumber(), depositModel.getAmount());
+        double newBalance = usersService.addDeposit(balanceModel.getAccountNumber(), depositModel.getAmount());
         model.addAttribute("accountNumber", balanceModel.getAccountNumber());
         model.addAttribute("amount", depositModel.getAmount());
         model.addAttribute("newBalance", newBalance);
