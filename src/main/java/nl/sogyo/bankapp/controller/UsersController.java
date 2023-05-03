@@ -4,10 +4,12 @@ import nl.sogyo.bankapp.model.BalanceModel;
 import nl.sogyo.bankapp.model.DepositModel;
 import nl.sogyo.bankapp.service.UsersService;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -32,24 +34,25 @@ public class UsersController {
     public String processLoginForm(@RequestParam int accountNumber, @RequestParam int pinNumber, Model model) {
         Optional<BalanceModel> balanceModelOptional = usersService.checkLogin(accountNumber, pinNumber);
         if (balanceModelOptional.isPresent() && balanceModelOptional.get() != null) {
-//            model.addAttribute("depositRequest", new DepositModel());
             BalanceModel balanceModel = balanceModelOptional.get();
-            model.addAttribute("userAccount", balanceModel.getAccountNumber());
+            model.addAttribute("accountNumber", balanceModel.getAccountNumber());
             model.addAttribute("userBalance", balanceModel.getBalance());
             return "personal_page";
         } else {
             return "error_page";
         }
     }
-
     @PostMapping("/deposit")
-    public String processDepositForm(DepositModel depositModel, Model model) {
-        double depositAmount = depositModel.getAmount();
-        int accountNumber = depositModel.getAccountNumber();
-        Optional<DepositModel> newBalance = usersService.addDeposit(accountNumber, depositAmount);
-
+    public String processDepositForm(DepositModel depositModel, BalanceModel balanceModel, Model model) {
+        Optional<Object> newBalance = usersService.addDeposit(balanceModel.getAccountNumber(), depositModel.getAmount());
+        model.addAttribute("accountNumber", balanceModel.getAccountNumber());
+        model.addAttribute("amount", depositModel.getAmount());
         model.addAttribute("newBalance", newBalance);
         return "deposit_success";
+
+
+
     }
+
 }
 

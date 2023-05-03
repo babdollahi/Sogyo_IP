@@ -8,12 +8,12 @@
 <body>
 <div style="text-align: center;">
     <h1>Welcome to your personal page! </h1>
-    <h2>Account Number: <span th:text="${userAccount}"  class="account-number"></span></h2>
+    <h2>Account Number: <span th:text="${accountNumber}"  class="account-number"></span></h2>
     <h2>Saving Balance: <span th:text="${userBalance}" class="saving-balance"></span></h2>
-     <form action="/deposit" method="post" th:object="${depositRequest}">
-         <input type="hidden" id="accountNumber" name="userAccount" value="${userAccount}" required>
-         <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" vlue="${amount}" required>
+<!--     <form action="/deposit" method="post" th:object="${depositRequest}">-->
+    <form action="#" th:action="@{/deposit}"  method="post">
+        <input type="hidden" name ="accountNumber" th:value="${accountNumber}" /><label for="amount">Amount:</label>
+         <input type="number" id="amount" name="amount" th:value="*{amount}" required>
         <br>
         <button type="submit">Deposit</button>
     </form>

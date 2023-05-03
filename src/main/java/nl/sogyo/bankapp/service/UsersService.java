@@ -21,7 +21,7 @@ public class UsersService {
         return accountRepository.findByAccountNumberAndPinNumber(accountNumber, pinNumber);
     }
 
-    public Optional<DepositModel> addDeposit(int accountNumber, double amount) {
+    public Optional<Object> addDeposit(int accountNumber, double amount) {
         Optional<BalanceModel> balanceModelOptional = accountRepository.findByAccountNumber(accountNumber);
         if(balanceModelOptional.isPresent()){
             BalanceModel balanceModel = balanceModelOptional.get();
@@ -34,7 +34,7 @@ public class UsersService {
             depositModel.setAmount(amount);
             depositModel.setDateOfProcess(now);
             accountRepository.save(balanceModel);
-            return Optional.of(depositModel);
+            return Optional.of(balanceModel.getBalance());
         }
         return Optional.empty();
     }
