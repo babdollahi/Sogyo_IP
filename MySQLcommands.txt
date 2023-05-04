@@ -7,7 +7,6 @@ DROP TABLE IF EXISTS login;
 CREATE TABLE login(
     accountNumber INT NOT NULL,
     pinNumber INT NOT NULL,
-    balance DOUBLE NOT NULL,
     PRIMARY KEY (accountNumber)
 );
 
@@ -20,10 +19,10 @@ CREATE TABLE deposit (
     FOREIGN KEY (accountNumber) REFERENCES login(accountNumber)
 );
 
-INSERT INTO login (accountNumber, pinNumber, balance) 
-VALUES (123123, 123, 1000.00), 
-       (456456, 456, 2000.00), 
-       (789789, 789, 3000.00);
+INSERT INTO login (accountNumber, pinNumber) 
+VALUES (123123, 123), 
+       (456456, 456), 
+       (789789, 789);
 
 SELECT * from login;
 SELECT * from deposit;

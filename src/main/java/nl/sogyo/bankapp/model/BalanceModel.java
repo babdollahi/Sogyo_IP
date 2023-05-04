@@ -1,11 +1,8 @@
 package nl.sogyo.bankapp.model;
 
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name="login")
@@ -19,18 +16,14 @@ public class BalanceModel {
     @Column(name = "pinNumber")
     private int pinNumber;
 
-    @Column(name = "balance")
-    private double balance;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
     private List<DepositModel> deposits = new ArrayList<>();
     public BalanceModel() {
     }
 
-    public BalanceModel(int pinNumber, double balance) {
+    public BalanceModel(int pinNumber) {
         this.pinNumber = pinNumber;
-        this.balance = balance;
     }
 
     public int getAccountNumber() {
@@ -49,12 +42,12 @@ public class BalanceModel {
         this.pinNumber = pinNumber;
     }
 
+    double balance = 0;
     public double getBalance() {
+        for (DepositModel deposit : getDeposits()) {
+            balance += deposit.getAmount();
+        }
         return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 
     public List<DepositModel> getDeposits() {

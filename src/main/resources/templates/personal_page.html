@@ -5,17 +5,19 @@
     <title>Personal page</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="personal-page">
 <div style="text-align: center;">
     <h1>Welcome to your personal page! </h1>
     <h2>Account Number: <span th:text="${accountNumber}"  class="account-number"></span></h2>
     <h2>Saving Balance: <span th:text="${userBalance}" class="saving-balance"></span></h2>
 <!--     <form action="/deposit" method="post" th:object="${depositRequest}">-->
     <form action="#" th:action="@{/deposit}"  method="post">
-        <input type="hidden" name ="accountNumber" th:value="${accountNumber}" /><label for="amount">Amount:</label>
-         <input type="number" id="amount" name="amount" th:value="*{amount}" required>
+        <input type="hidden" name ="accountNumber" th:value="${accountNumber}" /><label for="amount"></label>
+        <h2>Please enter positive value to deposit <br>
+            or negative value to withdrawal!</h2>
+        <input type="number" id="amount" name="amount" th:value="*{amount}" required>
         <br>
-        <button type="submit">Deposit</button>
+        <button type="submit">Deposit or Withdrawal</button>
     </form>
 </div>
 </body>
