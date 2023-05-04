@@ -1,0 +1,32 @@
+USE MyDB;
+
+
+DROP TABLE IF EXISTS deposit;
+DROP TABLE IF EXISTS login;
+
+CREATE TABLE login(
+    accountNumber INT NOT NULL,
+    pinNumber INT NOT NULL,
+    balance DOUBLE NOT NULL,
+    PRIMARY KEY (accountNumber)
+);
+
+CREATE TABLE deposit (
+    depositId INT NOT NULL AUTO_INCREMENT,
+    accountNumber INT NULL,
+    amount DOUBLE NOT NULL,
+    dateOfProcess TIMESTAMP NOT NULL,
+    PRIMARY KEY (depositId),
+    FOREIGN KEY (accountNumber) REFERENCES login(accountNumber)
+);
+
+INSERT INTO login (accountNumber, pinNumber, balance) 
+VALUES (123123, 123, 1000.00), 
+       (456456, 456, 2000.00), 
+       (789789, 789, 3000.00);
+
+SELECT * from login;
+SELECT * from deposit;
+SHOW Tables;
+
+
