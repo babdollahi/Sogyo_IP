@@ -16,13 +16,16 @@ public class BalanceModel {
     @Column(name = "pinNumber")
     private int pinNumber;
 
+    private double currentBalance = 0;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
     private List<DepositModel> deposits = new ArrayList<>();
     public BalanceModel() {
     }
 
-    public BalanceModel(int pinNumber) {
+    public BalanceModel(int accountNumber, int pinNumber) {
+        this.accountNumber = accountNumber;
         this.pinNumber = pinNumber;
     }
 
@@ -42,12 +45,11 @@ public class BalanceModel {
         this.pinNumber = pinNumber;
     }
 
-    double balance = 0;
     public double getBalance() {
         for (DepositModel deposit : getDeposits()) {
-            balance += deposit.getAmount();
+            currentBalance += deposit.getAmount();
         }
-        return balance;
+        return currentBalance;
     }
 
     public List<DepositModel> getDeposits() {
@@ -58,4 +60,7 @@ public class BalanceModel {
         this.deposits = deposits;
     }
 
+    public void setBalance(double currentBalance) {
+        this.currentBalance = currentBalance;
+    }
 }
