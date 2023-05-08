@@ -17,6 +17,8 @@ public class BalanceModel {
     @Column(name = "pinNumber")
     private int pinNumber;
 
+    private double currentBalance;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
     private List<DepositModel> deposits = new ArrayList<>();
@@ -24,7 +26,6 @@ public class BalanceModel {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
     private List<WithdrawalModel> withdrawals = new ArrayList<>();
-    private double currentBalance;
 
     public BalanceModel() {
     }

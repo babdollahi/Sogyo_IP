@@ -37,21 +37,42 @@ public class UsersService {
         }
         return 0;
     }
-    public double withdrawal(int accountNumber, double amount) {
+//    public double withdrawal(int accountNumber, double amount) {
+//        Optional<BalanceModel> balanceModelOptional = accountRepository.findById(accountNumber);
+//        if (balanceModelOptional.isPresent()) {
+//            BalanceModel balanceModel = balanceModelOptional.get();
+//            LocalDateTime now = LocalDateTime.now();
+//            WithdrawalModel withdrawalModel = new WithdrawalModel();
+//            balanceModel.getWithdrawals().add(withdrawalModel);
+//            withdrawalModel.setAmount(amount);
+//            withdrawalModel.setDateOfProcess(now);
+//            accountRepository.save(balanceModel);
+//            return balanceModel.getBalance();
+//
+//        }
+//        return 0;
+//    }
+
+    public double withdrawal(int accountNumber, double amount) throws InsufficientFundsException {
         Optional<BalanceModel> balanceModelOptional = accountRepository.findById(accountNumber);
         if (balanceModelOptional.isPresent()) {
             BalanceModel balanceModel = balanceModelOptional.get();
+            double newBalance = balanceModel.getBalance() - amount;
+            if (newBalance < 0) {
+                throw new InsufficientFundsException("Insufficient funds");
+            }
             LocalDateTime now = LocalDateTime.now();
             WithdrawalModel withdrawalModel = new WithdrawalModel();
             balanceModel.getWithdrawals().add(withdrawalModel);
             withdrawalModel.setAmount(amount);
             withdrawalModel.setDateOfProcess(now);
+            balanceModel.setBalance(newBalance); // update the balance
             accountRepository.save(balanceModel);
-            return balanceModel.getBalance();
-
+            return newBalance;
         }
         return 0;
     }
+
 
 
 }

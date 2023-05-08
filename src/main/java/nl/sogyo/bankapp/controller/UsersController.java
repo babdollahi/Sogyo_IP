@@ -2,6 +2,7 @@ package nl.sogyo.bankapp.controller;
 
 import nl.sogyo.bankapp.model.BalanceModel;
 import nl.sogyo.bankapp.model.DepositModel;
+import nl.sogyo.bankapp.service.InsufficientFundsException;
 import nl.sogyo.bankapp.service.UsersService;
 
 import org.jetbrains.annotations.NotNull;
@@ -49,22 +50,27 @@ public class UsersController {
                                          @RequestParam("amount") double amount,
                                          @RequestParam("transactionType") String transactionType,
                                          Model model) {
-        if(transactionType.equals("deposit")) {
-            double newBalance = usersService.addDeposit(accountNumber, amount);
-            model.addAttribute("accountNumber", accountNumber);
-            model.addAttribute("amount", amount);
-            model.addAttribute("newBalance", newBalance);
-            return "deposit_success";
-        } else if(transactionType.equals("withdrawal")) {
-            double newBalance = usersService.withdrawal(accountNumber, amount);
-            model.addAttribute("accountNumber", accountNumber);
-            model.addAttribute("amount", amount);
-            model.addAttribute("newBalance", newBalance);
-            return "withdrawal_success";
-        } else {
-            return "error_page";
+        try {
+            if(transactionType.equals("deposit")) {
+                double newBalance = usersService.addDeposit(accountNumber, amount);
+                model.addAttribute("accountNumber", accountNumber);
+                model.addAttribute("amount", amount);
+                model.addAttribute("newBalance", newBalance);
+                return "deposit_success";
+            } else if(transactionType.equals("withdrawal")) {
+                double newBalance = usersService.withdrawal(accountNumber, amount);
+                model.addAttribute("accountNumber", accountNumber);
+                model.addAttribute("amount", amount);
+                model.addAttribute("newBalance", newBalance);
+                return "withdrawal_success";
+            } else {
+                return "error_page";
+            }
+        } catch (InsufficientFundsException e) {
+            return "insufficient_funds";
         }
     }
+
 
 
 }
