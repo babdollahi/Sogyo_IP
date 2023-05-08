@@ -2,7 +2,9 @@ USE MyDB;
 
 
 DROP TABLE IF EXISTS deposit;
+DROP TABLE IF EXISTS withdrawal;
 DROP TABLE IF EXISTS login;
+
 
 CREATE TABLE login(
     accountNumber INT NOT NULL,
@@ -19,9 +21,9 @@ CREATE TABLE deposit (
     FOREIGN KEY (accountNumber) REFERENCES login(accountNumber)
 );
 
-INSERT INTO login (accountNumber, pinNumber) 
-VALUES (123123, 123), 
-       (456456, 456), 
+INSERT INTO login (accountNumber, pinNumber)
+VALUES (123123, 123),
+       (456456, 456),
        (789789, 789);
 
 SELECT * from login;
