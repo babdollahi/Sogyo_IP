@@ -63,7 +63,11 @@ public class UsersController {
                 model.addAttribute("amount", amount);
                 model.addAttribute("newBalance", newBalance);
                 return "withdrawal_success";
-            } else {
+            } else if(transactionType.equals("loan")) {
+                return "loan_calculation";
+            }
+
+            else {
                 return "error_page";
             }
         } catch (InsufficientFundsException e) {
