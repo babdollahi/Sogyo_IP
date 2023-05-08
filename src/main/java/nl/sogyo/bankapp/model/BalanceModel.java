@@ -2,6 +2,7 @@ package nl.sogyo.bankapp.model;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Entity
@@ -16,11 +17,15 @@ public class BalanceModel {
     @Column(name = "pinNumber")
     private int pinNumber;
 
-    private double currentBalance = 0;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
     private List<DepositModel> deposits = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
+    private List<WithdrawalModel> withdrawals = new ArrayList<>();
+    private double currentBalance;
+
     public BalanceModel() {
     }
 
@@ -49,8 +54,12 @@ public class BalanceModel {
         for (DepositModel deposit : getDeposits()) {
             currentBalance += deposit.getAmount();
         }
+        for (WithdrawalModel withdrawal : getWithdrawals()) {
+            currentBalance -= withdrawal.getAmount();
+        }
         return currentBalance;
     }
+
 
     public List<DepositModel> getDeposits() {
         return deposits;
@@ -62,5 +71,13 @@ public class BalanceModel {
 
     public void setBalance(double currentBalance) {
         this.currentBalance = currentBalance;
+    }
+
+    public List<WithdrawalModel> getWithdrawals() {
+        return withdrawals;
+    }
+
+    public void setWithdrawals(List<WithdrawalModel> withdrawals) {
+        this.withdrawals = withdrawals;
     }
 }

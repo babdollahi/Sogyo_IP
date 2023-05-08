@@ -2,6 +2,7 @@ package nl.sogyo.bankapp.service;
 
 import nl.sogyo.bankapp.model.BalanceModel;
 import nl.sogyo.bankapp.model.DepositModel;
+import nl.sogyo.bankapp.model.WithdrawalModel;
 import nl.sogyo.bankapp.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,5 +37,21 @@ public class UsersService {
         }
         return 0;
     }
+    public double withdrawal(int accountNumber, double amount) {
+        Optional<BalanceModel> balanceModelOptional = accountRepository.findById(accountNumber);
+        if (balanceModelOptional.isPresent()) {
+            BalanceModel balanceModel = balanceModelOptional.get();
+            LocalDateTime now = LocalDateTime.now();
+            WithdrawalModel withdrawalModel = new WithdrawalModel();
+            balanceModel.getWithdrawals().add(withdrawalModel);
+            withdrawalModel.setAmount(amount);
+            withdrawalModel.setDateOfProcess(now);
+            accountRepository.save(balanceModel);
+            return balanceModel.getBalance();
+
+        }
+        return 0;
+    }
+
 
 }
