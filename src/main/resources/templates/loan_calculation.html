@@ -3,22 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Loan Application</title>
+  <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
-<h1>Loan Application</h1>
-<form action="#"  th:action="@{/loanCalculation}" method="post">
-  <label for="loanAmount">Loan Amount:</label>
-  <input type="number" id="loanAmount" name="loanAmount" required>
+<div style="text-align: center;">
+  <h1>Loan Calculations</h1>
+  <p>We consider the loan requests up to 5 to 6 times more</p>
+  <p>than your savings account with a 5% interest rate.</p>
+  <p>You can, however, explore with different amounts</p>
+  <p>to determine your monthly and total repayment.</p>
 
-  <label for="interest">Yearly Interest:</label>
-  <input type="number" id="interest" name="interest" required>
-
-  <label for="repaymentYears">Years of Repayment:</label>
-  <input type="number" id="repaymentYears" name="repaymentYears" required>
-
-  <br><br>
-
-  <button type="submit">Submit Loan Application</button>
-</form>
+  <div style="text-align: left; display: inline-block;">
+    <form action="#" th:action="@{/loanCalculation}" method="post">
+      <label for="loanAmount" style="margin-right: 53px;">Loan Amount:</label>
+      <input type="number" id="loanAmount" name="loanAmount" required>
+      <br>
+      <label for="interest" style="margin-right: 45px;">Yearly Interest:</label>
+      <input type="number" id="interest" name="interest" required>
+      <br>
+      <label for="repaymentYears">Years of Repayment:</label>
+      <input type="number" id="repaymentYears" name="repaymentYears" required>
+      <br><br>
+      <div style="text-align: right;">
+      <button type="submit"  style="width: 212px; height: 22px;">Submit Loan Application</button>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
+
 </html>
