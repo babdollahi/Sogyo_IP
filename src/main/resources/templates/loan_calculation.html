@@ -16,15 +16,19 @@
 
   <div style="text-align: left; display: inline-block;">
     <form action="#" th:action="@{/loanCalculation}" method="post">
-      <label for="loanAmount" style="margin-right: 53px;">Loan Amount:</label>
-      <input type="number" id="loanAmount" name="loanAmount" required>
+
+      <label for="loanAmount"  style="margin-right: 53px;">Loan Amount:</label>
+      <input type="number" id="loanAmount" name="loanAmount" th:value="*{loanAmount}" required>
       <br>
-      <label for="interest" style="margin-right: 45px;">Yearly Interest:</label>
-      <input type="number" id="interest" name="interest" required>
+
+      <label for="interestRate" style="margin-right: 45px;">Yearly Interest:</label>
+      <input type="number" id="interestRate" name="interestRate" th:value="*{interestRate}" required>
       <br>
+
       <label for="repaymentYears">Years of Repayment:</label>
-      <input type="number" id="repaymentYears" name="repaymentYears" required>
-      <br><br>
+      <input type="number" id="repaymentYears" name="repaymentYears" th:value="*{repaymentYears}" required>
+      <br>
+
       <div style="text-align: right;">
       <button type="submit"  style="width: 212px; height: 22px;">Submit Loan Application</button>
       </div>

@@ -1,5 +1,6 @@
 package nl.sogyo.bankapp.controller;
 
+import jakarta.servlet.http.HttpSession;
 import nl.sogyo.bankapp.model.BalanceModel;
 import nl.sogyo.bankapp.model.DepositModel;
 import nl.sogyo.bankapp.service.InsufficientFundsException;
@@ -33,11 +34,14 @@ public class UsersController {
     }
 
     @PostMapping("/login")
-    public String processLoginForm(@RequestParam int accountNumber, @RequestParam int pinNumber, Model model) {
+    public String processLoginForm(HttpSession session,
+                                   @RequestParam int accountNumber,
+                                   @RequestParam int pinNumber,
+                                   Model model) {
         Optional<BalanceModel> balanceModelOptional = usersService.checkLogin(accountNumber, pinNumber);
+        session.setAttribute("accountNumber", accountNumber);
         if (balanceModelOptional.isPresent() && balanceModelOptional.get() != null) {
             BalanceModel balanceModel = balanceModelOptional.get();
-            model.addAttribute("accountNumber", balanceModel.getAccountNumber());
             model.addAttribute("userBalance", balanceModel.getBalance());
             return "personal_page";
         } else {
@@ -46,28 +50,23 @@ public class UsersController {
     }
 
     @PostMapping("/transaction")
-    public String processTransactionForm(@RequestParam("accountNumber") int accountNumber,
+    public String processTransactionForm(HttpSession session,
                                          @RequestParam("amount") double amount,
                                          @RequestParam("transactionType") String transactionType,
                                          Model model) {
+        int accountNumber = (int) session.getAttribute("accountNumber");
         try {
             if(transactionType.equals("deposit")) {
                 double newBalance = usersService.addDeposit(accountNumber, amount);
-                model.addAttribute("accountNumber", accountNumber);
                 model.addAttribute("amount", amount);
                 model.addAttribute("newBalance", newBalance);
                 return "deposit_success";
             } else if(transactionType.equals("withdrawal")) {
                 double newBalance = usersService.withdrawal(accountNumber, amount);
-                model.addAttribute("accountNumber", accountNumber);
                 model.addAttribute("amount", amount);
                 model.addAttribute("newBalance", newBalance);
                 return "withdrawal_success";
             }
-//            else if(transactionType.equals("loan")) {
-//                return "loan_calculation";
-//            }
-
             else {
                 return "error_page";
             }
@@ -77,11 +76,32 @@ public class UsersController {
     }
 
     @GetMapping("/loanCalculation")
-    public String getLoanPage(Model model){
+    public String getLoanPage(
+                              HttpSession session,
+                              Model model){
+        int accountNumber = (int) session.getAttribute("accountNumber");
+        model.addAttribute("accountNumber", accountNumber);
         return "loan_calculation";
     }
 
+    @PostMapping("/loanCalculation")
+    public String processLoanForm(HttpSession session,
+                                  @RequestParam("loanAmount") double loanAmount,
+                                  @RequestParam("repaymentYears") int repaymentYears,
+                                  @RequestParam("interestRate") double interestRate,
+                                  @NotNull Model model) {
+        int accountNumber = (int) session.getAttribute("accountNumber");
+        double monthlyPayment = usersService.loanCalculation(accountNumber,
+                                                             interestRate,
+                                                             repaymentYears,
+                                                             loanAmount);
+        model.addAttribute("loanAmount", loanAmount);
+        model.addAttribute("repaymentYears", repaymentYears);
+        model.addAttribute("interestRate", interestRate);
+        model.addAttribute("monthlyPayment", monthlyPayment);
 
+        return "loan_repayment";
+    }
 
 }
 

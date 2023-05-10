@@ -12,7 +12,6 @@
     <h2>Saving Balance: <span th:text="${userBalance}" class="saving-balance"></span></h2>
 
     <form action="#" th:action="@{/transaction}" method="post">
-        <input type="hidden" name="accountNumber" th:value="${accountNumber}" />
 
         <h2>Please enter a value to deposit or withdraw:</h2>
         <label for="amount"></label>
@@ -37,6 +36,8 @@
     <br>
     <br>
     <a href="http://localhost:8080/">Go to Home Page</a>
+    <a th:href="@{/loanCalculation(accountNumber=${accountNumber})}">Go to Second Page</a>
+
 </div>
 </body>
 </html>

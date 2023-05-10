@@ -2,6 +2,7 @@ package nl.sogyo.bankapp.service;
 
 import nl.sogyo.bankapp.model.BalanceModel;
 import nl.sogyo.bankapp.model.DepositModel;
+import nl.sogyo.bankapp.model.LoanModel;
 import nl.sogyo.bankapp.model.WithdrawalModel;
 import nl.sogyo.bankapp.repository.AccountRepository;
 import org.springframework.stereotype.Service;
@@ -58,40 +59,27 @@ public class UsersService {
         return 0;
     }
 
-    public double loanCalculation(int accountNumber, double amount) {
+    public double loanCalculation(int accountNumber, double yearlyInterestRate, int years, double loanAmount) {
         Optional<BalanceModel> balanceModelOptional = accountRepository.findById(accountNumber);
         if (balanceModelOptional.isPresent()) {
             BalanceModel balanceModel = balanceModelOptional.get();
-            double newBalance = balanceModel.getBalance() - amount;
-            LocalDateTime now = LocalDateTime.now();
-            WithdrawalModel withdrawalModel = new WithdrawalModel();
-            balanceModel.getWithdrawals().add(withdrawalModel);
-            withdrawalModel.setAmount(amount);
-            withdrawalModel.setDateOfProcess(now);
-            balanceModel.setBalance(newBalance);
+            LoanModel loanModel = new LoanModel();
+            balanceModel.getLoans().add(loanModel);
+
+            loanModel.setYearlyInterestRate(yearlyInterestRate);
+            loanModel.setLoanAmount(loanAmount);
+            loanModel.setYears(years);
+
+            double monthlyInterestRate = (yearlyInterestRate / 12) / 100;
+            double monthlyPayment = loanAmount * monthlyInterestRate / (1 - 1 /Math.pow(1+ monthlyInterestRate, years *12));
+            loanModel.setMonthlyPayment(monthlyPayment);
+
+            double totalPayment = monthlyPayment * years * 12;
+            loanModel.setTotalPayment(totalPayment);
+
             accountRepository.save(balanceModel);
-            return newBalance;
+            return monthlyPayment;
         }
         return 0;
     }
-//    private void loanActionPerformed(java.awt.event.ActionEvent evt) {
-//        double yearlyInterestRate = Double.parseDouble(yearlyInterestRateText.getText());
-//        double monthlyInterestRate = (yearlyInterestRate / 12) / 100;
-//        int years = Integer.parseInt(yearsText.getText());
-//        double loanAmount = Double.parseDouble(amountOfLoanText.getText());
-//        double monthlyPayment = loanAmount * monthlyInterestRate /
-//                (1 - 1 /Math.pow(1+ monthlyInterestRate, years *12));
-//
-//        String imonthlyPayment = Double.toString(monthlyPayment);
-//        imonthlyPayment = String.format("€%.2f", monthlyPayment);
-//        monthlyPaymentText.setText(imonthlyPayment);
-//
-//        double totalPayment = monthlyPayment * years * 12;
-//        String itotalPayment = String.format("€%.2f", totalPayment);
-//        totalPaymentText.setText(itotalPayment);
-//    }
-//
-
-
-
 }

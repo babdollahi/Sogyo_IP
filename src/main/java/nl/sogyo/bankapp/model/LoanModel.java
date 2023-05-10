@@ -1,14 +1,41 @@
 package nl.sogyo.bankapp.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="loan")
 public class LoanModel {
 
-        double yearlyInterestRate;
-        double monthlyInterestRate = (yearlyInterestRate / 12) / 100;
-        int years ;
-        double loanAmount;
-        double monthlyPayment = loanAmount * monthlyInterestRate /
-                (1 - 1 /Math.pow(1+ monthlyInterestRate, years *12));
-        double totalPayment = monthlyPayment * years * 12;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int loanId;
+
+    @Column(name = "yearlyInterestRate")
+    private double yearlyInterestRate;
+
+    @Column(name = "years")
+    private int years ;
+    @Column(name = "loanAmount")
+    private double loanAmount;
+
+    @Column(name = "monthlyInterestRate")
+    private double monthlyInterestRate;
+
+    @Column(name = "monthlyPayment")
+    private double monthlyPayment;
+
+    @Column(name = "totalPayment")
+    private double totalPayment;
+
+    public LoanModel() {
+    }
+
+    public LoanModel(double yearlyInterestRate, int years, double loanAmount ) {
+        this.yearlyInterestRate = yearlyInterestRate;
+        this.years = years;
+        this.loanAmount = loanAmount;
+    }
 
     public double getYearlyInterestRate() {
         return yearlyInterestRate;
