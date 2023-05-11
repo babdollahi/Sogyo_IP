@@ -108,13 +108,13 @@ h2 {
 }
 
 /* Style for background image on the personal page */
-.personal-page {
+.right_photo {
       margin: 0;
       padding: 0;
       font-family: sans-serif;
       background: url(https://cdnb.artstation.com/p/assets/images/images/059/603/875/large/banafsheh-shalchian-owl-2.jpg?1676744727);
-      background-size: 300px 300px;
-      background-position: 1000px 200px;
+      background-size: 500px 500px;
+      background-position: 1100px 70px;
       background-repeat: no-repeat;
 }
 
