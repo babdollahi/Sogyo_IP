@@ -94,3 +94,33 @@ body::before {
 .form a:hover {
   color: #ff4987;
 }
+
+.account-number, .saving-balance {
+  font-family: Arial, sans-serif;
+   ont-size: 24px;
+}
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+/* Style for background image on the personal page */
+.right_photo {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: url(https://cdnb.artstation.com/p/assets/images/images/059/603/875/large/banafsheh-shalchian-owl-2.jpg?1676744727);
+      background-size: 500px 500px;
+      background-position: 1100px 70px;
+      background-repeat: no-repeat;
+}
+
+/* Style for background color on the about page */
+.about-page {
+    background-color: #f0f0f0;
+}
+
+

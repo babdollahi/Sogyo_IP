@@ -1,43 +1,41 @@
 package nl.sogyo.bankapp.model;
 
-import jakarta.persistence.Entity;
-import java.util.Objects;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
 @Entity
 @Table(name="login")
 public class BalanceModel {
 
     @Id
-    @Column(name = "id")
-    private int id;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountNumber")
     private int accountNumber;
 
     @Column(name = "pinNumber")
     private int pinNumber;
 
-    @Column(name = "balance")
-    private double balance;
+    private double currentBalance;
 
-    public BalanceModel() {}
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
+    private List<DepositModel> deposits = new ArrayList<>();
 
-    public BalanceModel(int id, int accountNumber, int pinNumber, double balance) {
-        this.id = id;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
+    private List<WithdrawalModel> withdrawals = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
+    private List<LoanModel> loans = new ArrayList<>();
+
+    public BalanceModel() {
+    }
+
+    public BalanceModel(int accountNumber, int pinNumber) {
         this.accountNumber = accountNumber;
         this.pinNumber = pinNumber;
-        this.balance = balance;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getAccountNumber() {
@@ -57,10 +55,40 @@ public class BalanceModel {
     }
 
     public double getBalance() {
-        return balance;
+        for (DepositModel deposit : getDeposits()) {
+            currentBalance += deposit.getAmount();
+        }
+        for (WithdrawalModel withdrawal : getWithdrawals()) {
+            currentBalance -= withdrawal.getAmount();
+        }
+        return currentBalance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public List<DepositModel> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(List<DepositModel> deposits) {
+        this.deposits = deposits;
+    }
+
+
+    public void setLoans(List<LoanModel> loans) {
+        this.loans = loans;
+    }
+    public List<LoanModel> getLoans() {
+         return loans;
+    }
+
+    public void setBalance(double currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
+    public List<WithdrawalModel> getWithdrawals() {
+        return withdrawals;
+    }
+
+    public void setWithdrawals(List<WithdrawalModel> withdrawals) {
+        this.withdrawals = withdrawals;
     }
 }

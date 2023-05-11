@@ -5,9 +5,40 @@
     <title>Personal page</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="right_photo">
 <div style="text-align: center;">
-    <h1>Welcome to your personal page! <span th:text="${userLogin}"></span></h1>
+    <br>
+    <br>
+    <br>
+    <h1>Welcome to your personal page! </h1>
+    <h2>Account Number: <span th:text="${accountNumber}"  class="account-number"></span></h2>
+    <h2>Saving Balance: <span th:text="${userBalance}" class="saving-balance"></span></h2>
+
+    <form action="#" th:action="@{/transaction}" method="post">
+
+        <h2>Please enter a value to deposit or withdraw:</h2>
+        <label for="amount"></label>
+        <input type="number" id="amount" name="amount" th:value="*{amount}" required>
+
+        <br><br>
+        <input type="radio" id="deposit" name="transactionType" value="deposit">
+        <label for="deposit">Deposit</label>
+
+        <input type="radio" id="withdrawal" name="transactionType" value="withdrawal">
+        <label for="withdrawal">Withdrawal</label>
+        <br><br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+    <h2>Please click to calculate your loan payback.</h2>
+    <a href="/loanCalculation">
+        <button>Calculate loan</button>
+    </a>
+    <br>
+    <br>
+    <a href="http://localhost:8080/">Go to Home Page</a>
 </div>
 </body>
 </html>
