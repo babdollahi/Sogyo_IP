@@ -7,8 +7,10 @@
 </head>
 <body>
 <div style="text-align: center;">
-    <h2>!</h2>
-    <p>Your monthly loan payment is: <span th:text="${monthlyPayment}"></span></p>
+    <h1>Repayment Calculations</h1>
+    <br>
+    <p>Your monthly loan payment is (Euro): <span th:text="${repayments.get('monthlyPayment')}"></span></p>
+    <p>Your total loan payment is (Euro): <span th:text="${repayments.get('totalPayment')}"></span></p>
     <br>
     <a href="javascript:history.back()">Go to Personal Page</a>
     <br>

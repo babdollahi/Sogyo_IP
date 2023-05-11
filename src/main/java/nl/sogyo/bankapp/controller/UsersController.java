@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -40,6 +41,7 @@ public class UsersController {
                                    Model model) {
         Optional<BalanceModel> balanceModelOptional = usersService.checkLogin(accountNumber, pinNumber);
         session.setAttribute("accountNumber", accountNumber);
+        model.addAttribute("accountNumber", accountNumber);
         if (balanceModelOptional.isPresent() && balanceModelOptional.get() != null) {
             BalanceModel balanceModel = balanceModelOptional.get();
             model.addAttribute("userBalance", balanceModel.getBalance());
@@ -91,14 +93,14 @@ public class UsersController {
                                   @RequestParam("interestRate") double interestRate,
                                   @NotNull Model model) {
         int accountNumber = (int) session.getAttribute("accountNumber");
-        double monthlyPayment = usersService.loanCalculation(accountNumber,
+        Map<String, Double> repayments = usersService.loanCalculation(accountNumber,
                                                              interestRate,
                                                              repaymentYears,
                                                              loanAmount);
         model.addAttribute("loanAmount", loanAmount);
         model.addAttribute("repaymentYears", repaymentYears);
         model.addAttribute("interestRate", interestRate);
-        model.addAttribute("monthlyPayment", monthlyPayment);
+        model.addAttribute("repayments", repayments);
 
         return "loan_repayment";
     }

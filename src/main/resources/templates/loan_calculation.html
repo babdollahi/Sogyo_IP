@@ -18,15 +18,15 @@
     <form action="#" th:action="@{/loanCalculation}" method="post">
 
       <label for="loanAmount"  style="margin-right: 53px;">Loan Amount:</label>
-      <input type="number" id="loanAmount" name="loanAmount" th:value="*{loanAmount}" required>
+      <input type="number" id="loanAmount" name="loanAmount" th:value="*{loanAmount}"  step="any" required>
       <br>
 
       <label for="interestRate" style="margin-right: 45px;">Yearly Interest:</label>
-      <input type="number" id="interestRate" name="interestRate" th:value="*{interestRate}" required>
+      <input type="number" id="interestRate" name="interestRate" th:value="*{interestRate}"  step="any" required>
       <br>
 
       <label for="repaymentYears">Years of Repayment:</label>
-      <input type="number" id="repaymentYears" name="repaymentYears" th:value="*{repaymentYears}" required>
+      <input type="number" id="repaymentYears" name="repaymentYears" th:value="*{repaymentYears}"  step="any" required>
       <br>
 
       <div style="text-align: right;">

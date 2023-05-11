@@ -7,12 +7,16 @@ import nl.sogyo.bankapp.model.WithdrawalModel;
 import nl.sogyo.bankapp.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+
+import static java.lang.Float.parseFloat;
 
 @Service
 public class UsersService {
-
     private AccountRepository accountRepository;
 
     public UsersService(AccountRepository accountRepository) {
@@ -59,7 +63,7 @@ public class UsersService {
         return 0;
     }
 
-    public double loanCalculation(int accountNumber, double yearlyInterestRate, int years, double loanAmount) {
+    public Map<String, Double> loanCalculation(int accountNumber, double yearlyInterestRate, int years, double loanAmount) {
         Optional<BalanceModel> balanceModelOptional = accountRepository.findById(accountNumber);
         if (balanceModelOptional.isPresent()) {
             BalanceModel balanceModel = balanceModelOptional.get();
@@ -71,15 +75,20 @@ public class UsersService {
             loanModel.setYears(years);
 
             double monthlyInterestRate = (yearlyInterestRate / 12) / 100;
-            double monthlyPayment = loanAmount * monthlyInterestRate / (1 - 1 /Math.pow(1+ monthlyInterestRate, years *12));
+            double monthlyPayment = loanAmount * monthlyInterestRate / (1 - 1 / Math.pow(1 + monthlyInterestRate, years * 12));
             loanModel.setMonthlyPayment(monthlyPayment);
 
             double totalPayment = monthlyPayment * years * 12;
             loanModel.setTotalPayment(totalPayment);
 
             accountRepository.save(balanceModel);
-            return monthlyPayment;
+            Map<String, Double> repayments = new HashMap<>();
+            repayments.put("monthlyPayment", Math.round(monthlyPayment * 100) / 100.0);
+            repayments.put("totalPayment", Math.round(totalPayment * 100) / 100.0);
+
+            return repayments;
         }
-        return 0;
+        return null;
     }
 }
+
