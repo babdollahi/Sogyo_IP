@@ -23,6 +23,14 @@ public class UsersService {
         this.accountRepository = accountRepository;
     }
 
+    public BalanceModel registerUser(int accountNumber, int pinNumber, String email) {
+        BalanceModel balanceModel = new BalanceModel();
+        balanceModel.setAccountNumber(accountNumber);
+        balanceModel.setPinNumber(pinNumber);
+        balanceModel.setEmail(email);
+        accountRepository.save(balanceModel);
+        return accountRepository.save(balanceModel);
+    }
 
     public Optional<BalanceModel> checkLogin(int accountNumber, int pinNumber) {
         return accountRepository.findByAccountNumberAndPinNumber(accountNumber, pinNumber);

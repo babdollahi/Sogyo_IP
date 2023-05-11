@@ -27,7 +27,10 @@ public class UsersController {
     public UsersController(UsersService usersService) {
         this.usersService = usersService;
     }
-
+    @GetMapping("/register")
+    public String getRegisterPage(){
+        return "register_page";
+    }
     @GetMapping("/login")
     public String getLoginPage(Model model){
         model.addAttribute("loginRequest", new BalanceModel());

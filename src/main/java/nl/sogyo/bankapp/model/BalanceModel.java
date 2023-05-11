@@ -16,6 +16,9 @@ public class BalanceModel {
     @Column(name = "pinNumber")
     private int pinNumber;
 
+    @Column(name = "email")
+    private String email;
+
     private double currentBalance;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -36,6 +39,14 @@ public class BalanceModel {
     public BalanceModel(int accountNumber, int pinNumber) {
         this.accountNumber = accountNumber;
         this.pinNumber = pinNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int getAccountNumber() {
