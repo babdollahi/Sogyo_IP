@@ -9,7 +9,6 @@ import java.util.List;
 public class BalanceModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountNumber")
     private int accountNumber;
 
@@ -19,8 +18,8 @@ public class BalanceModel {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "currentBalance")
     private double currentBalance;
-
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
     private List<DepositModel> deposits = new ArrayList<>();

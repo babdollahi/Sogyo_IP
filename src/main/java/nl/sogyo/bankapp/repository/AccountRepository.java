@@ -14,5 +14,5 @@ public interface AccountRepository extends JpaRepository<BalanceModel, Integer> 
     Optional<BalanceModel> findByAccountNumber(int accountNumber);
 
     DepositModel save(DepositModel depositModel);
-    
+
 }

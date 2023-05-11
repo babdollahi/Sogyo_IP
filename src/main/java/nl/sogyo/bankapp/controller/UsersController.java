@@ -2,7 +2,6 @@ package nl.sogyo.bankapp.controller;
 
 import jakarta.servlet.http.HttpSession;
 import nl.sogyo.bankapp.model.BalanceModel;
-import nl.sogyo.bankapp.model.DepositModel;
 import nl.sogyo.bankapp.service.InsufficientFundsException;
 import nl.sogyo.bankapp.service.UsersService;
 
@@ -10,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,9 +26,36 @@ public class UsersController {
         this.usersService = usersService;
     }
     @GetMapping("/register")
-    public String getRegisterPage(){
+    public String getRegisterPage(Model model){
+        model.addAttribute("registerRequest", new BalanceModel());
         return "register_page";
     }
+    @PostMapping("/register")
+    public String register(@ModelAttribute BalanceModel registerRequest, Model model) {
+        int accountNumber = registerRequest.getAccountNumber();
+        int pinNumber = registerRequest.getPinNumber();
+        String email = registerRequest.getEmail();
+
+        if (accountNumber == 0 || pinNumber == 0) {
+            model.addAttribute("error", "Please provide valid account number and pin number.");
+            return "register_page";
+        }
+
+        try {
+            usersService.saveRegistration(registerRequest); // Save the registerRequest object
+        } catch (Exception e) {
+            model.addAttribute("error", "An error occurred while registering the user.");
+            return "register_page";
+        }
+
+        model.addAttribute("accountNumber", accountNumber);
+        model.addAttribute("email", email);
+        model.addAttribute("pinNumber", pinNumber);
+
+        return "register_success";
+    }
+
+
     @GetMapping("/login")
     public String getLoginPage(Model model){
         model.addAttribute("loginRequest", new BalanceModel());
@@ -41,7 +66,7 @@ public class UsersController {
     public String processLoginForm(HttpSession session,
                                    @RequestParam int accountNumber,
                                    @RequestParam int pinNumber,
-                                   Model model) {
+                                   @NotNull Model model) {
         Optional<BalanceModel> balanceModelOptional = usersService.checkLogin(accountNumber, pinNumber);
         session.setAttribute("accountNumber", accountNumber);
         model.addAttribute("accountNumber", accountNumber);
