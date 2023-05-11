@@ -2,6 +2,7 @@ package nl.sogyo.bankapp.controller;
 
 import jakarta.servlet.http.HttpSession;
 import nl.sogyo.bankapp.model.BalanceModel;
+import nl.sogyo.bankapp.model.ChangePasswordModel;
 import nl.sogyo.bankapp.service.InsufficientFundsException;
 import nl.sogyo.bankapp.service.UsersService;
 
@@ -131,6 +132,11 @@ public class UsersController {
         model.addAttribute("repayments", repayments);
 
         return "loan_repayment";
+    }
+
+    @GetMapping("/changePassword")
+    public String getChangePasswordPage(Model model) {
+        return "change_password";
     }
 
 }
