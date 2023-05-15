@@ -18,8 +18,6 @@ public class BalanceModel {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "currentBalance")
-    private double currentBalance;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
     private List<DepositModel> deposits = new ArrayList<>();
@@ -76,6 +74,7 @@ public class BalanceModel {
     }
 
     public double getBalance() {
+        double currentBalance =0;
         for (DepositModel deposit : getDeposits()) {
             currentBalance += deposit.getAmount();
         }
@@ -99,10 +98,6 @@ public class BalanceModel {
     }
     public List<LoanModel> getLoans() {
          return loans;
-    }
-
-    public void setBalance(double currentBalance) {
-        this.currentBalance = currentBalance;
     }
 
     public List<WithdrawalModel> getWithdrawals() {

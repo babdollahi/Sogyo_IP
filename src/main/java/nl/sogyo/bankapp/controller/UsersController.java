@@ -82,6 +82,21 @@ public class UsersController {
         }
     }
 
+    @GetMapping("/personalPage")
+    public String personalPage(HttpSession session,
+                               Model model
+                               ) {
+        int accountNumber = (int) session.getAttribute("accountNumber");
+        Optional<BalanceModel> balanceModelOptional = usersService. returnBalanceModel(accountNumber);
+        if (balanceModelOptional.isPresent() && balanceModelOptional.get() != null) {
+            BalanceModel balanceModel = balanceModelOptional.get();
+            model.addAttribute("accountNumber", accountNumber);
+            model.addAttribute("userBalance", balanceModel.getBalance());
+            return "personal_page";
+        } else {
+            return "error_page";
+        }
+    }
     @PostMapping("/transaction")
     public String processTransactionForm(HttpSession session,
                                          @RequestParam("amount") double amount,
@@ -154,7 +169,7 @@ public class UsersController {
 
         try {
             usersService.changePassword(pinNumber, accountNumber, newPinNumber, confirmNewPinNumber);
-            return "change_password";
+            return "change_password_success";
         } catch (IllegalArgumentException e) {
             if (e.getMessage().equals("confirmPinMismatch")) {
                 return "newPin_mismatch_error_page";

@@ -30,6 +30,10 @@ public class UsersService {
         return accountRepository.findByAccountNumberAndPinNumber(accountNumber, pinNumber);
     }
 
+    public Optional<BalanceModel> returnBalanceModel(int accountNumber) {
+        return accountRepository.findByAccountNumber(accountNumber);
+    }
+
     public double addDeposit(int accountNumber, double amount) {
         Optional<BalanceModel> balanceModelOptional = accountRepository.findById(accountNumber);
         if (balanceModelOptional.isPresent()) {
@@ -58,7 +62,6 @@ public class UsersService {
             balanceModel.getWithdrawals().add(withdrawalModel);
             withdrawalModel.setAmount(amount);
             withdrawalModel.setDateOfProcess(now);
-            balanceModel.setBalance(newBalance);
             accountRepository.save(balanceModel);
             return newBalance;
         }
