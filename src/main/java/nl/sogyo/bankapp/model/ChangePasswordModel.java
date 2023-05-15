@@ -14,6 +14,8 @@ public class ChangePasswordModel {
     @Column(name = "pinNumberId")
     private int pinNumberId;
 
+    @Column(name = "pinNumber")
+    private int pinNumber;
     @Column(name = "newPinNumber")
     private int newPinNumber;
     @Column(name = "dateOfProcess")
@@ -22,9 +24,17 @@ public class ChangePasswordModel {
     public ChangePasswordModel() {
     }
 
-    public ChangePasswordModel(int newPinNumber, LocalDateTime dateOfProcess) {
+    public ChangePasswordModel(int pinNumber, int newPinNumber) {
+        this.pinNumber = pinNumber;
         this.newPinNumber = newPinNumber;
-        this.dateOfProcess = dateOfProcess;
+    }
+
+    public int getPinNumber() {
+        return pinNumber;
+    }
+
+    public void setPinNumber(int pinNumber) {
+        this.pinNumber = pinNumber;
     }
 
     public int getPinNumberId() {

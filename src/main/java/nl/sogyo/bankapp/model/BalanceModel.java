@@ -32,12 +32,23 @@ public class BalanceModel {
     @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
     private List<LoanModel> loans = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "accountNumber", referencedColumnName = "accountNumber")
+    private List<ChangePasswordModel> changedPassword = new ArrayList<>();
     public BalanceModel() {
     }
 
     public BalanceModel(int accountNumber, int pinNumber) {
         this.accountNumber = accountNumber;
         this.pinNumber = pinNumber;
+    }
+
+    public List<ChangePasswordModel> getChangedPassword() {
+        return changedPassword;
+    }
+
+    public void setChangedPassword(List<ChangePasswordModel> changedPassword) {
+        this.changedPassword = changedPassword;
     }
 
     public String getEmail() {

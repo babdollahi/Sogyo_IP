@@ -1,9 +1,6 @@
 package nl.sogyo.bankapp.service;
 
-import nl.sogyo.bankapp.model.BalanceModel;
-import nl.sogyo.bankapp.model.DepositModel;
-import nl.sogyo.bankapp.model.LoanModel;
-import nl.sogyo.bankapp.model.WithdrawalModel;
+import nl.sogyo.bankapp.model.*;
 import nl.sogyo.bankapp.repository.AccountRepository;
 import org.springframework.stereotype.Service;
 
@@ -100,5 +97,32 @@ public class UsersService {
     public void saveRegistration(BalanceModel registerRequest) {
         accountRepository.save(registerRequest);
     }
+
+    public void changePassword(int pinNumber, int accountNumber, int newPinNumber, int confirmNewPinNumber) {
+        Optional<BalanceModel> balanceModelOptional = accountRepository.findByAccountNumberAndPinNumber(accountNumber, pinNumber);
+
+        if (balanceModelOptional.isPresent()) {
+            BalanceModel balanceModel = balanceModelOptional.get();
+            ChangePasswordModel changePasswordModel = new ChangePasswordModel();
+            balanceModel.getChangedPassword().add(changePasswordModel);
+
+            LocalDateTime now = LocalDateTime.now();
+
+            changePasswordModel.setNewPinNumber(newPinNumber);
+            changePasswordModel.setDateOfProcess(now);
+
+            if (newPinNumber == confirmNewPinNumber) {
+                balanceModel.setPinNumber(newPinNumber);
+                accountRepository.save(balanceModel);
+            } else {
+                // Handle case when newPinNumber and confirmNewPinNumber don't match
+                throw new IllegalArgumentException("New pin numbers do not match.");
+            }
+        } else {
+            // Handle case when accountNumber and pinNumber combination is not found
+            throw new IllegalArgumentException("Invalid account number or pin number.");
+        }
+    }
+
 }
 

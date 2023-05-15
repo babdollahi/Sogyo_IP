@@ -26,11 +26,13 @@ public class UsersController {
     public UsersController(UsersService usersService) {
         this.usersService = usersService;
     }
+
     @GetMapping("/register")
-    public String getRegisterPage(Model model){
+    public String getRegisterPage(Model model) {
         model.addAttribute("registerRequest", new BalanceModel());
         return "register_page";
     }
+
     @PostMapping("/register")
     public String register(@ModelAttribute BalanceModel registerRequest, Model model) {
         int accountNumber = registerRequest.getAccountNumber();
@@ -58,7 +60,7 @@ public class UsersController {
 
 
     @GetMapping("/login")
-    public String getLoginPage(Model model){
+    public String getLoginPage(Model model) {
         model.addAttribute("loginRequest", new BalanceModel());
         return "login_page";
     }
@@ -87,18 +89,17 @@ public class UsersController {
                                          Model model) {
         int accountNumber = (int) session.getAttribute("accountNumber");
         try {
-            if(transactionType.equals("deposit")) {
+            if (transactionType.equals("deposit")) {
                 double newBalance = usersService.addDeposit(accountNumber, amount);
                 model.addAttribute("amount", amount);
                 model.addAttribute("newBalance", newBalance);
                 return "deposit_success";
-            } else if(transactionType.equals("withdrawal")) {
+            } else if (transactionType.equals("withdrawal")) {
                 double newBalance = usersService.withdrawal(accountNumber, amount);
                 model.addAttribute("amount", amount);
                 model.addAttribute("newBalance", newBalance);
                 return "withdrawal_success";
-            }
-            else {
+            } else {
                 return "error_page";
             }
         } catch (InsufficientFundsException e) {
@@ -108,8 +109,8 @@ public class UsersController {
 
     @GetMapping("/loanCalculation")
     public String getLoanPage(
-                              HttpSession session,
-                              Model model){
+            HttpSession session,
+            Model model) {
         int accountNumber = (int) session.getAttribute("accountNumber");
         model.addAttribute("accountNumber", accountNumber);
         return "loan_calculation";
@@ -123,9 +124,9 @@ public class UsersController {
                                   @NotNull Model model) {
         int accountNumber = (int) session.getAttribute("accountNumber");
         Map<String, Double> repayments = usersService.loanCalculation(accountNumber,
-                                                             interestRate,
-                                                             repaymentYears,
-                                                             loanAmount);
+                interestRate,
+                repaymentYears,
+                loanAmount);
         model.addAttribute("loanAmount", loanAmount);
         model.addAttribute("repaymentYears", repaymentYears);
         model.addAttribute("interestRate", interestRate);
@@ -134,10 +135,24 @@ public class UsersController {
         return "loan_repayment";
     }
 
+
     @GetMapping("/changePassword")
-    public String getChangePasswordPage(Model model) {
+    public String getChangePasswordPage(Model model,
+                                        HttpSession session
+                                        ) {
+        int accountNumber = (int) session.getAttribute("accountNumber");
+        model.addAttribute("accountNumber", accountNumber);
         return "change_password";
     }
+    @PostMapping("/changePassword")
+    public String postChangePasswordPage(HttpSession session,
+                                         @RequestParam("pinNumber") int pinNumber,
+                                         @RequestParam("newPinNumber") int newPinNumber,
+                                         @RequestParam("confirmNewPinNumber") int confirmNewPinNumber,
+                                         Model model) {
+        int accountNumber = (int) session.getAttribute("accountNumber");
 
+        usersService.changePassword(pinNumber, accountNumber, newPinNumber, confirmNewPinNumber);
+        return "change_password_success";
+    }
 }
-
