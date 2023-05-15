@@ -152,7 +152,18 @@ public class UsersController {
                                          Model model) {
         int accountNumber = (int) session.getAttribute("accountNumber");
 
-        usersService.changePassword(pinNumber, accountNumber, newPinNumber, confirmNewPinNumber);
-        return "change_password_success";
+        try {
+            usersService.changePassword(pinNumber, accountNumber, newPinNumber, confirmNewPinNumber);
+            return "change_password";
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().equals("confirmPinMismatch")) {
+                return "newPin_mismatch_error_page";
+            } else if (e.getMessage().equals("InvalidPinAccount")) {
+                return "invalid_account_error_page";
+            } else {
+            return "error_page";
+        }
     }
+    }
+
 }

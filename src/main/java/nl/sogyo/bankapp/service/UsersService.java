@@ -116,13 +116,14 @@ public class UsersService {
                 accountRepository.save(balanceModel);
             } else {
                 // Handle case when newPinNumber and confirmNewPinNumber don't match
-                throw new IllegalArgumentException("New pin numbers do not match.");
+                throw new IllegalArgumentException("confirmPinMismatch");
             }
         } else {
             // Handle case when accountNumber and pinNumber combination is not found
-            throw new IllegalArgumentException("Invalid account number or pin number.");
+            throw new IllegalArgumentException("InvalidPinAccount");
         }
     }
+
 
 }
 
