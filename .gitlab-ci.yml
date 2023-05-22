@@ -3,25 +3,32 @@ stages:
   - test
   - deploy
 
+variables:
+  JAVA_HOME: "/usr/lib/jvm/java-11-openjdk"  # Update this path based on your Java installation
+
 build-job:
   stage: build
   script:
+    - export JAVA_HOME=$JAVA_HOME
     - ./gradlew build
 
 unit-test-job:
   stage: test
   script:
+    - export JAVA_HOME=$JAVA_HOME
     - ./gradlew test
 
 lint-test-job:
   stage: test
   script:
+    - export JAVA_HOME=$JAVA_HOME
     - ./gradlew lint
 
 deploy-job:
   stage: deploy
   environment: production
   script:
+    - export JAVA_HOME=$JAVA_HOME
     - export SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/MyDB
     - export SPRING_DATASOURCE_USERNAME=root
     - export SPRING_DATASOURCE_PASSWORD=$BANK_DB_PASSWORD
