@@ -1,6 +1,6 @@
 stages:
   - build
-  - test
+  # - test
   # - deploy
 
 variables:
@@ -13,12 +13,12 @@ build-job:
     - $JAVA_HOME/bin/java -version
     - ./gradlew clean build --no-build-cache
 
-test-job:
-  stage: test
-  script:
-    - export JAVA_HOME=$JAVA_HOME
-    - $JAVA_HOME/bin/java -version
-    - ./gradlew test
+# test-job:
+#   stage: test
+#   script:
+#     - export JAVA_HOME=$JAVA_HOME
+#     - $JAVA_HOME/bin/java -version
+#     - ./gradlew test
 
 
 # lint-test-job:
