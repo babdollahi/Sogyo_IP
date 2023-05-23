@@ -3,14 +3,14 @@ stages:
   # - test
   # - deploy
 
-variables:
-  JAVA_HOME: "/usr/bin/java"
+# variables:
+#   JAVA_HOME: "/usr/bin/java"
 
 build-job:
   stage: build
   script:
-    - export JAVA_HOME=$JAVA_HOME
-    - ./gradlew build
+    # - export JAVA_HOME=$JAVA_HOME
+    - ./gradlew clean build
 
 # unit-test-job:
 #   stage: test
