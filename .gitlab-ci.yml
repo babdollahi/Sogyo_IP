@@ -17,7 +17,7 @@ build-job:
     - $JAVA_HOME/bin/java -version
     - ./gradlew clean build --no-build-cache
   artifacts: 
-  paths: /home/babdollahi
+  paths: /home/gitlab-runner/
 
 # test-job:
 #   stage: test
