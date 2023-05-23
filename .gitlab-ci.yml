@@ -23,18 +23,3 @@ test-job:
     - ./gradlew test
 
 
-# lint-test-job:
-#   stage: test
-#   script:
-#     - export JAVA_HOME=$JAVA_HOME
-#     - ./gradlew lint
-
-# deploy-job:
-#   stage: deploy
-#   environment: production
-#   script:
-#     - export JAVA_HOME=$JAVA_HOME
-#     - export SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/MyDB
-#     - export SPRING_DATASOURCE_USERNAME=root
-#     - export SPRING_DATASOURCE_PASSWORD=$BANK_DB_PASSWORD
-#     - ./gradlew deploy
