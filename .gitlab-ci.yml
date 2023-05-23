@@ -10,7 +10,7 @@ build-job:
   stage: build
   script:
     # - export JAVA_HOME=$JAVA_HOME
-    - ./gradlew clean build
+    - ./gradlew clean build --no-build-cache
 
 # unit-test-job:
 #   stage: test
