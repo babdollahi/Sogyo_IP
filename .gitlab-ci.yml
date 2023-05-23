@@ -9,19 +9,21 @@ stages:
 build-job:
   stage: build
   image: gradle:8.1.1-jdk17
+  variables:
+    MYSQL_ROOT_PASSWORD: my-secret-pw
+  services:
+    - mysql:latest
   script:
-    - ./gradlew clean build --no-build-cache
+    - ./gradlew clean build --no-build-cache -Dspring.datasource.url=jdbc:mysql://mysql:3306/MyDB -Dspring.datasource.password=$MYSQL_ROOT_PASSWORD
   artifacts: 
     paths: 
       - ./build/libs/
 
-test-job:
-  stage: test
-  image: gradle:8.1.1-jdk17
-  services:
-    - mysql:latest
-  script:
-    - ./gradlew test
+# test-job:
+#   stage: test
+#   image: gradle:8.1.1-jdk17
+#   script:
+#     - ./gradlew test
 
 docker-build:
   stage: docker
