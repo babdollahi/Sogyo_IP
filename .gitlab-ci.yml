@@ -3,13 +3,13 @@ stages:
   # - test
   # - deploy
 
-# variables:
-#   JAVA_HOME: "/usr/bin/java"
+variables:
+  JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64/bin/java"
 
 build-job:
   stage: build
   script:
-    - export JAVA_HOME=/usr/bin/java
+    - export JAVA_HOME=$JAVA_HOME
     - ./gradlew clean build --no-build-cache
 
 # unit-test-job:
