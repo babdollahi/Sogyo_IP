@@ -30,3 +30,4 @@ test-job:
     # - $JAVA_HOME/bin/java -version
     - ./gradlew test
 
+
