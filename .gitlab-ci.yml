@@ -14,7 +14,7 @@ build-job:
   services:
     - mysql:latest
   script:
-    - ./gradlew clean build --no-build-cache -Dspring.datasource.url=jdbc:mysql://mysql:3306/MyDB -Dspring.datasource.password=$MYSQL_ROOT_PASSWORD
+    - ./gradlew clean build --no-build-cache -Dspring.profiles.active=gitlab
   artifacts: 
     paths: 
       - ./build/libs/
