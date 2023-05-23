@@ -10,7 +10,9 @@ variables:
 
 build-job:
   stage: build
+  # image: adoptopenjdk:17-jdk-hotspot
   script:
+    # - docker images
     - export JAVA_HOME=$JAVA_HOME
     - $JAVA_HOME/bin/java -version
     - ./gradlew clean build --no-build-cache
@@ -20,6 +22,11 @@ build-job:
 
 test-job:
   stage: test
+#   image: adoptopenjdk:17-jdk-hotspot
   script:
+#     - docker images
+#     - docker ps
+    # - export JAVA_HOME=$JAVA_HOME
+    # - $JAVA_HOME/bin/java -version
     - ./gradlew test
 
