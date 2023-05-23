@@ -22,7 +22,7 @@ test-job:
   image: adoptopenjdk:17-jdk-hotspot
   script:
     - docker images
-    - docker ps
+    # - docker ps
     - export JAVA_HOME=$JAVA_HOME
     - $JAVA_HOME/bin/java -version
     - ./gradlew test
