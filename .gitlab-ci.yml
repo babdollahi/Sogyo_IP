@@ -1,24 +1,28 @@
 stages:
   - build
-  # - test
+  - test
   # - deploy
 
 variables:
   JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
+  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_DRIVER: overlay2
 
 build-job:
   stage: build
   script:
+    - docker images
     - export JAVA_HOME=$JAVA_HOME
     - $JAVA_HOME/bin/java -version
     - ./gradlew clean build --no-build-cache
-
-# test-job:
-#   stage: test
-#   script:
-#     - export JAVA_HOME=$JAVA_HOME
-#     - $JAVA_HOME/bin/java -version
-#     - ./gradlew test
+test-job:
+  stage: test
+  script:
+    - docker images
+    - docker ps
+    - export JAVA_HOME=$JAVA_HOME
+    - $JAVA_HOME/bin/java -version
+    - ./gradlew test
 
 
 # lint-test-job:
