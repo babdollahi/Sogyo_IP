@@ -6,14 +6,15 @@ stages:
   - test
 
 variables:
-  JAVA_HOME: "/usr/local/openjdk-17"
+  JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
 
 build-job:
   stage: build
   image: adoptopenjdk:17-jdk-hotspot
   script:
     - docker images
-    - java -version
+    - export JAVA_HOME=$JAVA_HOME
+    - $JAVA_HOME/bin/java -version
     - ./gradlew clean build --no-build-cache
 
 test-job:
@@ -22,5 +23,6 @@ test-job:
   script:
     - docker images
     - docker ps
-    - java -version
+    - export JAVA_HOME=$JAVA_HOME
+    - $JAVA_HOME/bin/java -version
     - ./gradlew test
