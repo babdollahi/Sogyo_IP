@@ -3,7 +3,7 @@
 
 stages:
   - build
-  # - test
+  - test
 
 variables:
   JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
@@ -20,13 +20,13 @@ build-job:
     paths: 
       - /home/gitlab-runner/
 
-# test-job:
-#   stage: test
+test-job:
+  stage: test
 #   image: adoptopenjdk:17-jdk-hotspot
-#   script:
+  script:
 #     - docker images
 #     - docker ps
     # - export JAVA_HOME=$JAVA_HOME
     # - $JAVA_HOME/bin/java -version
-    # - ./gradlew test
+    - ./gradlew test
 
