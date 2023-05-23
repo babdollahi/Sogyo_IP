@@ -1,22 +1,18 @@
 stages:
   - build
-  # - test
+  - test
   # - deploy
 
-# variables:
-#   JAVA_HOME: "/usr/lib/jvm/java-11-openjdk"  # Update this path based on your Java installation
 
 build-job:
   stage: build
   script:
-    # - export JAVA_HOME=$JAVA_HOME
     - ./gradlew build
 
-# unit-test-job:
-#   stage: test
-#   script:
-#     - export JAVA_HOME=$JAVA_HOME
-#     - ./gradlew test
+unit-test-job:
+  stage: test
+  script:
+    - ./gradlew test
 
 # lint-test-job:
 #   stage: test
