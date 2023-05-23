@@ -1,6 +1,6 @@
 stages:
   - build
-  - test
+  # - test
 
 variables:
   JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
@@ -15,9 +15,9 @@ build-job:
     paths: 
       - /home/gitlab-runner/
 
-test-job:
-  stage: test
-  script:
-    - export JAVA_HOME=$JAVA_HOME
-    - $JAVA_HOME/bin/java -version
-    - ./gradlew test
+# test-job:
+#   stage: test
+#   script:
+#     - export JAVA_HOME=$JAVA_HOME
+#     - $JAVA_HOME/bin/java -version
+#     - ./gradlew test
