@@ -4,30 +4,27 @@
 stages:
   - build
   - test
-
-variables:
-  JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
+  - docker
 
 build-job:
   stage: build
-  # image: adoptopenjdk:17-jdk-hotspot
+  image: gradle:8.1.1-jdk17
   script:
-    # - docker images
-    - export JAVA_HOME=$JAVA_HOME
-    - $JAVA_HOME/bin/java -version
     - ./gradlew clean build --no-build-cache
   artifacts: 
     paths: 
-      - /home/gitlab-runner/
+      - ./build/libs/
 
 test-job:
   stage: test
-#   image: adoptopenjdk:17-jdk-hotspot
+  image: gradle:8.1.1-jdk17
   script:
-#     - docker images
-#     - docker ps
-    # - export JAVA_HOME=$JAVA_HOME
-    # - $JAVA_HOME/bin/java -version
     - ./gradlew test
 
-
+docker-build:
+  stage: docker
+  image: docker:23.0.6
+  services:
+    - docker:23.0.6-dind
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE .
