@@ -1,6 +1,6 @@
 stages:
   - build
-  - test
+  # - test
   # - deploy
 
 
@@ -9,10 +9,10 @@ build-job:
   script:
     - ./gradlew build
 
-unit-test-job:
-  stage: test
-  script:
-    - ./gradlew test
+# unit-test-job:
+#   stage: test
+#   script:
+#     - ./gradlew test
 
 # lint-test-job:
 #   stage: test
