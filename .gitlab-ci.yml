@@ -1,12 +1,9 @@
 stages:
   - build
   - test
-  # - deploy
 
 variables:
   JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
-  DOCKER_HOST: tcp://localhost:2375
-  DOCKER_DRIVER: overlay2
 
 build-job:
   stage: build
@@ -15,6 +12,7 @@ build-job:
     - export JAVA_HOME=$JAVA_HOME
     - $JAVA_HOME/bin/java -version
     - ./gradlew clean build --no-build-cache
+
 test-job:
   stage: test
   script:
