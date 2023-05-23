@@ -1,18 +1,13 @@
-# services:
-#   - docker:dind
-
 stages:
   - build
-  # - test
+  - test
 
 variables:
   JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-amd64"
 
 build-job:
   stage: build
-  # image: adoptopenjdk:17-jdk-hotspot
   script:
-    # - docker images
     - export JAVA_HOME=$JAVA_HOME
     - $JAVA_HOME/bin/java -version
     - ./gradlew clean build --no-build-cache
@@ -20,12 +15,9 @@ build-job:
     paths: 
       - /home/gitlab-runner/
 
-# test-job:
-#   stage: test
-#   image: adoptopenjdk:17-jdk-hotspot
-#   script:
-#     - docker images
-#     - docker ps
-    # - export JAVA_HOME=$JAVA_HOME
-    # - $JAVA_HOME/bin/java -version
-    # - ./gradlew test
+test-job:
+  stage: test
+  script:
+    - export JAVA_HOME=$JAVA_HOME
+    - $JAVA_HOME/bin/java -version
+    - ./gradlew test
